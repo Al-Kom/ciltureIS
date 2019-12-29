@@ -6,17 +6,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariableInputDialog {
+class VariableInputDialog {
     private String title;
     private List<String> inputParams;
     private List<JTextField> textFields;
 
-    public VariableInputDialog(String title, List<String> inputParams) {
+    VariableInputDialog(String title, List<String> inputParams) {
         this.title = title;
         this.inputParams = inputParams;
     }
 
-    public void create(ActionListener listener) {
+    void create(ActionListener listener) {
         JPanel inputPanel = new JPanel();
         textFields = new ArrayList<>();
         inputPanel.setLayout(
@@ -45,10 +45,11 @@ public class VariableInputDialog {
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
 
-    public List<String> getData() {
+    List<String> getData() {
         List<String> data = new ArrayList<>();
         for (JTextField curTF : textFields) {
             data.add(curTF.getText());
+            curTF.setText("");
         }
         return data;
     }
