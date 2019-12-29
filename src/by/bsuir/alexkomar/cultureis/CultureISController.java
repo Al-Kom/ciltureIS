@@ -58,24 +58,36 @@ public class CultureISController {
 
 
     //---------------------------------EDIT-----------------------------------------
-    public void editAddress(int id,String city,String street,int house) {
-        sqlManager.editAddress(id,city,street,house);
+    void editAddress(String id, String city, String street, String house) {
+        sqlManager.editAddress(Integer.valueOf(id), city, street, Integer.valueOf(house));
     }
 
-    public void editOwner(int id,int addressID,String name,boolean isLegalEntity,String head) {
-        sqlManager.editOwner(id,addressID,name,isLegalEntity,head);
-    }
-    public void editCultureObject(int id,int addressId, int ownerId,String name,String type,String telephone,
-                                 int seatsNumber, boolean isSeasonal, Date openingDate) {
-        sqlManager.editCultureObject(id,addressId, ownerId, name, type, telephone, seatsNumber, isSeasonal, openingDate);
+    void editOwner(String id, String addressID, String name,
+                   String isLegalEntity, String head) {
+        sqlManager.editOwner(Integer.valueOf(id), Integer.valueOf(addressID), name,
+                Boolean.valueOf(isLegalEntity), head);
     }
 
-    public void editEvent(int id,int cultureObjectId,String name,Date date,String type) {
-        sqlManager.editEvent(id,cultureObjectId, name, date, type);
+    void editCultureObject(String id, String addressId, String ownerId,
+                           String name, String type, String telephone,
+                           String seatsNumber, String isSeasonal,
+                           String openingDate) {
+        sqlManager.editCultureObject(Integer.valueOf(id), Integer.valueOf(addressId),
+                Integer.valueOf(ownerId), name, type, telephone,
+                Integer.valueOf(seatsNumber), Boolean.valueOf(isSeasonal),
+                Date.valueOf(openingDate));
     }
 
-    public void editPopularity(int id,int cultureObjectId,Date date,int visitorsNumber){
-        sqlManager.editPopularity(id,cultureObjectId, date, visitorsNumber);
+    void editEvent(String id, String cultureObjectId, String name,
+                   String date, String type) {
+        sqlManager.editEvent(Integer.valueOf(id), Integer.valueOf(cultureObjectId),
+                name, Date.valueOf(date), type);
+    }
+
+    void editPopularity(String id, String cultureObjectId, String date,
+                        String visitorsNumber){
+        sqlManager.editPopularity(Integer.valueOf(id), Integer.valueOf(cultureObjectId),
+                Date.valueOf(date), Integer.valueOf(visitorsNumber));
     }
 
 

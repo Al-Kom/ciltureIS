@@ -91,12 +91,69 @@ class CultureISGui {
         frame.getContentPane().add(addButtonsPanel);
 
 
-        //----------------------------------EDIT Panel-------------------------------
+        //----------------------------------EDIT Panel------------------------------
         JButton editAddressButton = new JButton("EDIT ADDRESS");
         JButton editOwnerButton = new JButton("EDIT OWNER");
         JButton editCultureObjectButton = new JButton("EDIT CULTURE OBJECT");
         JButton editEventButton = new JButton("EDIT EVENT");
         JButton editPopularityButton = new JButton("EDIT POPULARITY");
+        //buttons action listeners
+        editAddressButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Edit address",
+                    Arrays.asList("id", "city", "street", "house"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.editAddress(params.get(0), params.get(1), params.get(2), params.get(3));
+            });
+        });
+
+        editOwnerButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Edit owner",
+                    Arrays.asList("id", "address id", "name", "is legal entity", "head"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.editOwner(params.get(0), params.get(1),
+                        params.get(2), params.get(3), params.get(4));
+            });
+        });
+
+        editCultureObjectButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Edit culture object",
+                    Arrays.asList("id", "address id", "owner id", "name", "type",
+                            "telephone", "seatsNumber", "isSeasonal", "openingDate"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.editCultureObject(params.get(0), params.get(1),
+                        params.get(2), params.get(3), params.get(4), params.get(5),
+                        params.get(6), params.get(7), params.get(8));
+            });
+        });
+
+        editEventButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Edit event",
+                    Arrays.asList("id", "object id", "name", "date","type"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.editEvent(params.get(0), params.get(1),
+                        params.get(2), params.get(3), params.get(4));
+            });
+        });
+
+        editPopularityButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Edit popularity",
+                    Arrays.asList("id", "object id", "date","visitors number"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.editPopularity(params.get(0), params.get(1), params.get(2), params.get(3));
+            });
+        });
+
+        //add buttons to panel
         JPanel editButtonsPanel = new JPanel();
         editButtonsPanel.add(editAddressButton);
         editButtonsPanel.add(editOwnerButton);
