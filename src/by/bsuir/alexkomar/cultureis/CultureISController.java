@@ -2,7 +2,7 @@ package by.bsuir.alexkomar.cultureis;
 
 import java.sql.Date;
 
-public class CultureISController {
+class CultureISController {
     private  SqlManager sqlManager;
 
     CultureISController() {
@@ -92,15 +92,15 @@ public class CultureISController {
 
 
     //---------------------------------SEARCH---------------------------------------
-    public void searchCultureObjectsByOpeningDate(Date openingDate) {
-        sqlManager.searchCultureObjectsByOpeningDate(openingDate);
+    void searchCultureObjectsByOpeningDate(String openingDate) {
+        sqlManager.searchCultureObjectsByOpeningDate(Date.valueOf(openingDate));
     }
 
-    public void searchEventsByDateInterval(Date date1, Date date2) {
-        sqlManager.searchEventsByDateInterval(date1, date2);
+    void searchEventsByDateInterval(String date1, String date2) {
+        sqlManager.searchEventsByDateInterval(Date.valueOf(date1), Date.valueOf(date2));
     }
 
-    public void searchObjectByMinimalVisitorsNumber(int visitorsNumber) {
-        sqlManager.searchObjectByMinimalVisitorsNumber(visitorsNumber);
+    void searchObjectByMinimalVisitorsNumber(String visitorsNumber) {
+        sqlManager.searchCultureObjectsByMinimalVisitorsNumber(Integer.parseInt(visitorsNumber));
     }
 }

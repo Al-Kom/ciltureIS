@@ -231,18 +231,53 @@ class CultureISGui {
         frame.getContentPane().add(deleteButtonsPanel);
 
 
-        JButton searchButton = new JButton("SEARCH");
+        //---------------------------------------SEARCH-----------------------------
+        JButton searchCultureObjectsByOpeningDateButton = new JButton("Search culture object by opening date");
+        JButton searchEventsByDateIntervalButton = new JButton("Search events by date interval");
+        JButton searchCultureObjectsByMinimalPopularityButton = new JButton("Search culture objects by minimal popularity");
+        //buttons action listener
+        searchCultureObjectsByOpeningDateButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Search culture object by opening date",
+                    Collections.singletonList("opening date"));
+            dialog.create(e1 -> controller.searchCultureObjectsByOpeningDate(dialog.getData().get(0)));
+        });
 
-        //table
-        VariableTableModel tableModel = controller.getTableModel();
-        JTable table = new JTable(tableModel);
+        searchEventsByDateIntervalButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Search events by date interval",
+                    Arrays.asList("date from", "date to"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.searchEventsByDateInterval(params.get(0), params.get(1));
+            });
+        });
+
+        searchCultureObjectsByMinimalPopularityButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Search culture objects by minimal popularity",
+                    Collections.singletonList("minimal visitors value"));
+            dialog.create(e1 -> controller.searchObjectByMinimalVisitorsNumber(dialog.getData().get(0)));
+        });
+
+        //add to panel
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.Y_AXIS));
+        searchPanel.add(searchCultureObjectsByOpeningDateButton);
+        searchPanel.add(searchEventsByDateIntervalButton);
+        searchPanel.add(searchCultureObjectsByMinimalPopularityButton);
+        frame.getContentPane().add(searchPanel);
+
+
+        //--------------------------------TABLE-------------------------------------
+        JTable table = new JTable(controller.getTableModel());
         JScrollPane scroller = new JScrollPane(table);
         scroller.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         frame.getContentPane().add(scroller);
 
 
-        frame.setSize(900, 600);
+        frame.setSize(900, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
