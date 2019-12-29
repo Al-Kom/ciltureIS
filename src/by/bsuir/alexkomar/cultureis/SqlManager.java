@@ -140,8 +140,7 @@ class SqlManager {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Can delete " + tableName);
-            e.printStackTrace();
+            System.out.println("Can't delete entry " + id + " in " + tableName);
         } catch (Exception e) {
             e.printStackTrace();
         }

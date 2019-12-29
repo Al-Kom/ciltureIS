@@ -46,15 +46,15 @@ public class CultureISController {
 
 
     //---------------------------------DELETE---------------------------------------
-    public void deleteAddress(int id) { sqlManager.deleteAddress(id); }
+    void deleteAddress(String id) { sqlManager.deleteAddress(Integer.valueOf(id)); }
 
-    public void deleteOwner(int id) { sqlManager.deleteOwner(id); }
+    void deleteOwner(String id) { sqlManager.deleteOwner(Integer.valueOf(id)); }
 
-    public void deleteCultureObject(int id) { sqlManager.deleteCultureObject(id); }
+    void deleteCultureObject(String id) { sqlManager.deleteCultureObject(Integer.valueOf(id)); }
 
-    public void deleteEvent(int id) { sqlManager.deleteEvent(id); }
+    void deleteEvent(String id) { sqlManager.deleteEvent(Integer.valueOf(id)); }
 
-    public void deletePopularity(int id) { sqlManager.deletePopularity(id); }
+    void deletePopularity(String id) { sqlManager.deletePopularity(Integer.valueOf(id)); }
 
 
     //---------------------------------EDIT-----------------------------------------

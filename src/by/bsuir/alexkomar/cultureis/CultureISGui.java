@@ -2,6 +2,7 @@ package by.bsuir.alexkomar.cultureis;
 
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -163,13 +164,74 @@ class CultureISGui {
         frame.getContentPane().add(editButtonsPanel);
 
 
+        //----------------------------------DELETE Panel----------------------------
+        JButton deleteAddressButton = new JButton("DELETE ADDRESS");
+        JButton deleteOwnerButton = new JButton("DELETE OWNER");
+        JButton deleteCultureObjectButton = new JButton("DELETE CULTURE OBJECT");
+        JButton deleteEventButton = new JButton("DELETE EVENT");
+        JButton deletePopularityButton = new JButton("DELETE POPULARITY");
+        //buttons action listeners
+        deleteAddressButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Delete address",
+                    Collections.singletonList("id"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.deleteAddress(params.get(0));
+            });
+        });
 
-        JButton removeButton = new JButton("REMOVE");
+        deleteOwnerButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Delete owner",
+                    Collections.singletonList("id"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.deleteOwner(params.get(0));
+            });
+        });
+
+        deleteCultureObjectButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Delete culture object",
+                    Collections.singletonList("id"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.deleteCultureObject(params.get(0));
+            });
+        });
+
+        deleteEventButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Delete event",
+                    Collections.singletonList("id"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.deleteEvent(params.get(0));
+            });
+        });
+
+        deletePopularityButton.addActionListener(e -> {
+            VariableInputDialog dialog = new VariableInputDialog(
+                    "Delete popularity",
+                    Collections.singletonList("id"));
+            dialog.create(e1 -> {
+                List<String> params = dialog.getData();
+                controller.deletePopularity(params.get(0));
+            });
+        });
+
+        //add buttons to panel
+        JPanel deleteButtonsPanel = new JPanel();
+        deleteButtonsPanel.add(deleteAddressButton);
+        deleteButtonsPanel.add(deleteOwnerButton);
+        deleteButtonsPanel.add(deleteCultureObjectButton);
+        deleteButtonsPanel.add(deleteEventButton);
+        deleteButtonsPanel.add(deletePopularityButton);
+        frame.getContentPane().add(deleteButtonsPanel);
+
+
         JButton searchButton = new JButton("SEARCH");
-
-
-        //other buttons
-
 
         //table
         VariableTableModel tableModel = controller.getTableModel();
@@ -180,7 +242,7 @@ class CultureISGui {
         frame.getContentPane().add(scroller);
 
 
-        frame.setSize(800, 600);
+        frame.setSize(900, 600);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
