@@ -14,28 +14,38 @@ public class CultureISController {
         return sqlManager.getTableModel();
     }
 
-    //add
-    public void addAddress(String city,String street,int house) {
-        sqlManager.addAddress(city,street,house);
+
+    //---------------------------------ADD------------------------------------------
+    void addAddress(String city, String street, String house) {
+        sqlManager.addAddress(city,street,Integer.valueOf(house));
     }
 
-    public void addOwner(int addressID,String name,boolean isLegalEntity,String head) {
-        sqlManager.addOwner(addressID,name,isLegalEntity,head);
-    }
-    public void addCultureObject(int addressId, int ownerId,String name,String type,String telephone,
-                                 int seatsNumber, boolean isSeasonal, Date openingDate) {
-        sqlManager.addCultureObject(addressId, ownerId, name, type, telephone, seatsNumber, isSeasonal, openingDate);
+    void addOwner(String addressID, String name, String isLegalEntity, String head) {
+        sqlManager.addOwner(Integer.valueOf(addressID), name,
+                Boolean.valueOf(isLegalEntity), head);
     }
 
-    public void addEvent(int cultureObjectId,String name,Date date,String type) {
-        sqlManager.addEvent(cultureObjectId, name, date, type);
+    void addCultureObject(String addressId, String ownerId, String name,
+                          String type, String telephone, String seatsNumber,
+                          String isSeasonal, String openingDate) {
+        sqlManager.addCultureObject(Integer.valueOf(addressId),
+                Integer.valueOf(ownerId), name, type, telephone,
+                Integer.valueOf(seatsNumber), Boolean.valueOf(isSeasonal),
+                Date.valueOf(openingDate));
     }
 
-    public void addPopularity(int cultureObjectId,Date date,int visitorsNumber){
-        sqlManager.addPopularity(cultureObjectId, date, visitorsNumber);
+    void addEvent(String cultureObjectId, String name, String date, String type) {
+        sqlManager.addEvent(Integer.valueOf(cultureObjectId),name,
+                Date.valueOf(date),type);
     }
 
-    //delete
+    void addPopularity(String cultureObjectId, String date, String visitorsNumber){
+        sqlManager.addPopularity(Integer.valueOf(cultureObjectId),
+                Date.valueOf(date),Integer.valueOf(visitorsNumber));
+    }
+
+
+    //---------------------------------DELETE---------------------------------------
     public void deleteAddress(int id) { sqlManager.deleteAddress(id); }
 
     public void deleteOwner(int id) { sqlManager.deleteOwner(id); }
@@ -46,7 +56,8 @@ public class CultureISController {
 
     public void deletePopularity(int id) { sqlManager.deletePopularity(id); }
 
-    //edit
+
+    //---------------------------------EDIT-----------------------------------------
     public void editAddress(int id,String city,String street,int house) {
         sqlManager.editAddress(id,city,street,house);
     }
@@ -67,7 +78,8 @@ public class CultureISController {
         sqlManager.editPopularity(id,cultureObjectId, date, visitorsNumber);
     }
 
-    //search
+
+    //---------------------------------SEARCH---------------------------------------
     public void searchCultureObjectsByOpeningDate(Date openingDate) {
         sqlManager.searchCultureObjectsByOpeningDate(openingDate);
     }
