@@ -291,27 +291,30 @@ class SqlManager {
                     "openingdate", "name", "type", "city", "street", "house"
             ));
 
+            System.out.println("Input date: " + openingDate.toString());
+
             preparedStatement = connection.prepareStatement("SELECT" +
-                    " cultureobjects.openingdate, cultureobjects.name ," +
-                    " cultureobjects.type, addresses.city, addresses.street," +
-                    " addresses.house FROM cultureobjects, addresses " +
-                    " WHERE cultureobjects.openingdate = ? AND cultureobjects.addressid = addresses.id;");
+                    " co.openingdate, co.name ," +
+                    " co.type, a.city, a.street," +
+                    " a.house FROM cultureobjects co JOIN addresses a" +
+                    " ON co.addressid = a.id WHERE co.openingdate > ? ");
             preparedStatement.setDate(1, openingDate);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 tableModel.addEntry( new ArrayList<>(Arrays.asList(
-                        resultSet.getDate("cultureobjects.openingdate").toString(),
-                        resultSet.getString("cultureobjects.name"),
-                        resultSet.getString("cultureobjects.type"),
-                        resultSet.getString("addresses.city"),
-                        resultSet.getString("addresses.street"),
-                        resultSet.getString("addresses.house"))));
+                        resultSet.getDate("co.openingdate").toString(),
+                        resultSet.getString("co.name"),
+                        resultSet.getString("co.type"),
+                        resultSet.getString("a.city"),
+                        resultSet.getString("a.street"),
+                        resultSet.getString("a.house"))));
             }
             //update
+            tableModel.fireTableStructureChanged();
             tableModel.fireTableDataChanged();
         } catch (SQLException e) {
-            System.out.println("Can not find culture objects by opening date");
+            System.out.println("Can not find culture objects by opening date " + openingDate.toString());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -345,39 +348,39 @@ class SqlManager {
                         resultSet.getString("addresses.house"))));
             }
             //update
+            tableModel.fireTableStructureChanged();
             tableModel.fireTableDataChanged();
         } catch (SQLException e) {
-            System.out.println("Can not find events by date interval");
+            System.out.println("Can not find events by date interval [" + date1.toString() + ";" + date2.toString());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void searchObjectByMinimalVisitorsNumber(int visitorsNumber) {
+    void searchCultureObjectsByMinimalVisitorsNumber(int visitorsNumber) {
         try {
             tableModel.setColumnNames(Arrays.asList(
-                    "cultureobject.name", "sum(popularity)", "street", "house"
+                    "cultureobject.name", "sum(visitorsNumber)"
             ));
 
-            preparedStatement = connection.prepareStatement("SELECT " +
-                    " cultureobjects.name, SUM(popularity.visitorsnumber) " +
-                    " FROM cultureobjects, popularity" +
-                    " GROUP BY cultureobjects.name" +
-                    " having popularity.cultureobjectid = cultureobjects.id AND" +
-                    " popularity.visitorsnumber >= ?;");
+            preparedStatement = connection.prepareStatement("SELECT co.name, pop.vsum" +
+                    " FROM cultureobjects co JOIN" +
+                    " (SELECT cultureobjectid coid, sum(visitorsnumber) vsum" +
+                    " FROM popularity GROUP BY coid) pop ON co.id = pop.coid WHERE pop.vsum > ?;");
             preparedStatement.setInt(1, visitorsNumber);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 tableModel.addEntry(new ArrayList<>(Arrays.asList(
-                        resultSet.getString("cultureobjects.name"),
-                        String.valueOf(resultSet.getInt("SUM(popularity.visitorsnumber)")))));
+                        resultSet.getString("co.name"),
+                        String.valueOf(resultSet.getInt("pop.vsum")))));
             }
             //update
+            tableModel.fireTableStructureChanged();
             tableModel.fireTableDataChanged();
         } catch (SQLException e) {
-            System.out.println("Can not find culture objects by minimal popularity");
+            System.out.println("Can not find culture objects by minimal popularity " + visitorsNumber);
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
