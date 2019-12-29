@@ -8,7 +8,7 @@ public class VariableTableModel extends AbstractTableModel {
     private List<String> columnNames;
     private List<List<String>> entries;
 
-    public VariableTableModel() {
+    VariableTableModel() {
         columnNames = new ArrayList<>();
         entries = new ArrayList<>();
     }
@@ -30,11 +30,11 @@ public class VariableTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int columnIndex) { return columnNames.get(columnIndex); }
 
-    public void setColumnNames(List<String> newColumnNames) {
+    void setColumnNames(List<String> newColumnNames) {
         entries = new ArrayList<>();
         columnNames = newColumnNames;
     }
 
-    public void addEntry(List<String> toAdd) { entries.add(toAdd); }
+    void addEntry(List<String> toAdd) { entries.add(toAdd); }
 
 }
